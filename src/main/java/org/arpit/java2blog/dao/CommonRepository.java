@@ -75,7 +75,7 @@ public class CommonRepository {
         return criteria.list();
     }
 
-    private <T> Criteria findMatchingObjects(Class<T> clazz, Object[] nameValues) {
+    public <T> Criteria findMatchingObjects(Class<T> clazz, Object[] nameValues) {
         if (nameValues.length % 2 == 1)
             throw new IllegalArgumentException("Parameters should contain name value sequentially.");
 
