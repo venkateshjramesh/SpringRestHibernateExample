@@ -1,8 +1,6 @@
 package org.arpit.java2blog.controller;
 
-import org.arpit.java2blog.model.Country;
 import org.arpit.java2blog.service.CommonService;
-import org.arpit.java2blog.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +57,6 @@ public class CommonController {
 	@RequestMapping(value = "/saveValue/{className}", method = RequestMethod.POST, headers = "Accept=application/json")
 	public void saveValue(@PathVariable String className,@RequestBody String string) throws IOException, ClassNotFoundException {
 		commonService.saveValue(className,string);
-		
 	}
 
 	@RequestMapping(value = "/deleteValueById/{className}/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
