@@ -17,13 +17,13 @@ public class Country{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id;
+	Integer id;
 	
 	@Column(name="countryName")
 	String countryName;	
 	
 	@Column(name="population")
-	long population;
+	Long population;
 	
 	public Country() {
 		super();

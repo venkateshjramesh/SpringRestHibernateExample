@@ -14,44 +14,62 @@ public class CommonController {
 	
 	@Autowired
 	CommonService commonService;
-	
-	/*@RequestMapping(value = "/getAllCountries", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Country> getCountries() {
-		
-		List<Country> listOfCountries = countryService.getAllCountries();
-		return listOfCountries;
-	}*/
 
-	@RequestMapping(value = "/getValue/{className}/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Country getCountryById(@PathVariable String className,@PathVariable int id) throws ClassNotFoundException {
+	//http://localhost:8080/SpringRestHibernateExample/getAllValues/Country
+	@RequestMapping(value = "/getAllValues/{className}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public <T> List<T> getAllValues(@PathVariable String className) {
+		return commonService.getAllValues(className);
+	}
+
+	//http://localhost:8080/SpringRestHibernateExample/getValueWithId/Country/1
+	@RequestMapping(value = "/getValueWithId/{className}/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public <T> T getValueById(@PathVariable String className,@PathVariable int id) throws ClassNotFoundException {
 		return commonService.get(className,id);
 	}
 
-	@RequestMapping(value = "/updateValue/{className}", method = RequestMethod.PUT, headers = "Accept=application/json")
-	public void updateCountry(@PathVariable String className,@RequestBody String string) throws IOException, ClassNotFoundException {
-		commonService.updateValue(className,string);
-	}
-
-	@RequestMapping(value = "/findValue/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Country getCountryByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException {
+	//http://localhost:8080/SpringRestHibernateExample/findUniqueValueWithParams/Country/countryName,pak,countryName,Pak
+	@RequestMapping(value = "/findUniqueValueWithParams/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public <T> T getValueByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
 		return commonService.find(className,parameters.trim().split(","));
 	}
 
-	@RequestMapping(value = "/findAll/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Object findAllByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException {
+	//http://localhost:8080/SpringRestHibernateExample/findAllWithParams/Country/countryName,India,id,1
+	@RequestMapping(value = "/findAllWithParams/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Object findAllByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
 		return  commonService.findAll(className,parameters.trim().split(","));
 	}
 
-	/*@RequestMapping(value = "/addCountry", method = RequestMethod.POST, headers = "Accept=application/json")
-	public void addCountry(@RequestBody Country country) {	
-		countryService.addCountry(country);
+	//http://localhost:8080/SpringRestHibernateExample/findAllAsc/Country/id
+	@RequestMapping(value = "/findAllAsc/{className}/{parameter}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Object findAllInAsc(@PathVariable String className,@PathVariable String parameter) throws ClassNotFoundException, NoSuchFieldException {
+		return  commonService.findAllInAsc(className,parameter);
+	}
+
+	//http://localhost:8080/SpringRestHibernateExample/findAllWithParamsOrderBy/Country/id/false/countryName,India
+	@RequestMapping(value = "/findAllWithParamsOrderBy/{className}/{orderByProperty}/{asc}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Object findAllWithOrderBy(@PathVariable String className,@PathVariable String orderByProperty,@PathVariable String asc,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
+		return  commonService.findAllWithOrderBy(className,orderByProperty,Boolean.valueOf(asc),parameters.trim().split(","));
+	}
+
+	@RequestMapping(value = "/updateValue/{className}", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public void updateValue(@PathVariable String className,@RequestBody String string) throws IOException, ClassNotFoundException {
+		commonService.updateValue(className,string);
+	}
+
+	@RequestMapping(value = "/saveValue/{className}", method = RequestMethod.POST, headers = "Accept=application/json")
+	public void saveValue(@PathVariable String className,@RequestBody String string) throws IOException, ClassNotFoundException {
+		commonService.saveValue(className,string);
 		
 	}
 
+	@RequestMapping(value = "/deleteValueById/{className}/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public void deleteValueById(@PathVariable("className") String className,@PathVariable("id") int id) throws IOException, ClassNotFoundException {
+		commonService.deleteById(className,id);
+	}
 
+	@RequestMapping(value = "/deleteValue/{className}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public void deleteValue(@PathVariable("className") String className,@RequestBody String string) throws IOException, ClassNotFoundException {
+		commonService.delete(className,string);
+	}
 
-	@RequestMapping(value = "/deleteCountry/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public void deleteCountry(@PathVariable("id") int id) {
-		countryService.deleteCountry(id);		
-	}	*/
 }

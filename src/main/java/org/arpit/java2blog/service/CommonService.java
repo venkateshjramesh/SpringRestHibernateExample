@@ -26,8 +26,11 @@ public class CommonService {
 	CommonRepository commonRepository;
 
 	@Transactional
-	public <T> Serializable save(T entity) {
-		return commonRepository.save(entity);
+	public <T> Serializable saveValue(String className,String json) throws ClassNotFoundException, IOException {
+		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return commonRepository.save(mapper.readValue(json, clazz));
 	}
 
 	@Transactional
@@ -46,52 +49,60 @@ public class CommonService {
 	}
 
 	@Transactional
-	public <T> T find(String className, Object... nameValues) throws ClassNotFoundException {
+	public <T> T find(String className, Object... nameValues) throws ClassNotFoundException, NoSuchFieldException {
 		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
 		return (T) commonRepository.find(clazz, nameValues);
 	}
 
 	@Transactional
-	public <T> List<T> findAll(String className, Object... nameValues) throws ClassNotFoundException {
+	public <T> List<T> findAll(String className, Object... nameValues) throws ClassNotFoundException, NoSuchFieldException {
 		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
 		return commonRepository.findAll(clazz, nameValues);
 	}
 
+	@Transactional
+	public <T> List<T> getAllValues(String className) {
+		return commonRepository.getAllValues(className);
+	}
 
+	@Transactional
+	public <T> List<T> findAllInAsc(String className, String orderByProperty) throws ClassNotFoundException, NoSuchFieldException {
+		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return commonRepository.findAllInAsc(clazz, orderByProperty);
+	}
 
-	/*@Transactional
-	public <T> void delete(T entity) {
-		getSession().delete(entity);
+	@Transactional
+	public <T> List<T> findAllWithOrderBy(String className, String orderByProperty, boolean isAscending, Object... nameValues) throws ClassNotFoundException, NoSuchFieldException {
+		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return commonRepository.findAllWithOrderBy(clazz,orderByProperty,isAscending,nameValues);
 	}
 
 
+	@Transactional
+	public <T> void delete(String className,String json) throws ClassNotFoundException, IOException {
+		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		commonRepository.delete(mapper.readValue(json, clazz));
+	}
+
+	@Transactional
+	public <T> void deleteById(String className,int id) throws ClassNotFoundException, IOException {
+		Class<T> clazz = (Class<T>) Class.forName("org.arpit.java2blog.model." + className);
+		commonRepository.deleteById(clazz,id);
+	}
 
 	@Transactional
 	public <T> T load(Class<T> clazz, Serializable id) {
-		return (T) getSession().load(clazz, id);
+		return (T) commonRepository.getSession().load(clazz, id);
 	}
 
 
-
-	@Transactional
-	public <T> List<T> findAllInAsc(Class<T> clazz, String orderByProperty) {
-		return findAllWithOrderBy(clazz, orderByProperty, true);
-	}
-
-	@Transactional
-	public <T> List<T> findAllWithOrderBy(Class<T> clazz, String orderByProperty, boolean isAscending, Object... nameValues) {
-		Criteria criteria = findMatchingObjects(clazz, nameValues);
-		if (isAscending)
-			criteria.addOrder(Order.asc(orderByProperty));
-		else
-			criteria.addOrder(Order.desc(orderByProperty));
-
-		return criteria.list();
-	}
-
-
-
-	@Transactional
+	/*@Transactional
 	public Query createQuery(String queryString) {
 		return getSession().createQuery(queryString);
 	}*/
