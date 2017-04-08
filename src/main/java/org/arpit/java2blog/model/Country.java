@@ -51,6 +51,14 @@ public class Country{
 	}
 	public void setPopulation(long population) {
 		this.population = population;
-	}	
-	
+	}
+
+	@Override
+	public String toString() {
+		return "Country{" +
+				"id=" + id +
+				", countryName='" + countryName + '\'' +
+				", population=" + population +
+				'}';
+	}
 }
