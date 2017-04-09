@@ -28,13 +28,13 @@ public class CommonController {
 	//http://localhost:8080/SpringRestHibernateExample/findUniqueValueWithParams/Country/countryName,pak,countryName,Pak
 	@RequestMapping(value = "/findUniqueValueWithParams/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public <T> T getValueByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
-		return commonService.find(className,parameters.trim().split(","));
+		return commonService.find(className,parameters.trim().replaceAll("#","\\.").split(","));
 	}
 
 	//http://localhost:8080/SpringRestHibernateExample/findAllWithParams/Country/countryName,India,id,1
 	@RequestMapping(value = "/findAllWithParams/{className}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Object findAllByParameters(@PathVariable String className,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
-		return  commonService.findAll(className,parameters.trim().split(","));
+		return  commonService.findAll(className,parameters.trim().replaceAll("#","\\.").split(","));
 	}
 
 	//http://localhost:8080/SpringRestHibernateExample/findAllAsc/Country/id
@@ -46,7 +46,7 @@ public class CommonController {
 	//http://localhost:8080/SpringRestHibernateExample/findAllWithParamsOrderBy/Country/id/false/countryName,India
 	@RequestMapping(value = "/findAllWithParamsOrderBy/{className}/{orderByProperty}/{asc}/{parameters}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Object findAllWithOrderBy(@PathVariable String className,@PathVariable String orderByProperty,@PathVariable String asc,@PathVariable String parameters) throws ClassNotFoundException, NoSuchFieldException {
-		return  commonService.findAllWithOrderBy(className,orderByProperty,Boolean.valueOf(asc),parameters.trim().split(","));
+		return  commonService.findAllWithOrderBy(className,orderByProperty,Boolean.valueOf(asc),parameters.trim().replaceAll("#","\\.").split(","));
 	}
 
 	@RequestMapping(value = "/updateValue/{className}", method = RequestMethod.PUT, headers = "Accept=application/json")

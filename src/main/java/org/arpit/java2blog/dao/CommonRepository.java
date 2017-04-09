@@ -85,14 +85,18 @@ public class CommonRepository {
     }
 
     public <T> Criteria findMatchingObjects(Class<T> clazz, Object[] nameValues) throws NoSuchFieldException {
+
         if (nameValues.length % 2 == 1)
             throw new IllegalArgumentException("Parameters should contain name value sequentially.");
 
         Criteria criteria = getSession().createCriteria(clazz);
         for (int i = 0; i < nameValues.length; i = i + 2) {
-            Object parameterField = clazz.getDeclaredField((String)nameValues[i]);
-            Class classParam =  clazz.getDeclaredField((String)nameValues[i]).getType();
-            String paramType = classParam.toString().trim().split(" ")[1];
+            //Object parameterField = clazz.getDeclaredField((String)nameValues[i]);
+            String paramType = "";
+            if(!nameValues[i].toString().contains(".")) {
+                Class classParam = clazz.getDeclaredField((String) nameValues[i]).getType();
+                paramType = classParam.toString().trim().split(" ")[1];
+            }
             if(paramType.equalsIgnoreCase("java.lang.Integer")) {
                 criteria.add(Restrictions.eq((String) nameValues[i], Integer.parseInt((String)nameValues[i + 1])));
             }
@@ -104,7 +108,11 @@ public class CommonRepository {
             }
             else if(paramType.equalsIgnoreCase("java.lang.Double")) {
                 criteria.add(Restrictions.eq((String) nameValues[i], Double.parseDouble((String)nameValues[i + 1])));
-            }else{
+            }
+            else{
+                if(nameValues[i].toString().contains(".")){
+                    criteria.createAlias(nameValues[i].toString().split("\\.")[0],nameValues[i].toString().split("\\.")[0]);
+                }
                 criteria.add(Restrictions.eq((String) nameValues[i], nameValues[i + 1]));
             }
 
@@ -120,7 +128,7 @@ public class CommonRepository {
         return session.createQuery("from " + className).list();
     }
 
-     public Query createQuery(String queryString) {
+    public Query createQuery(String queryString) {
         return getSession().createQuery(queryString);
     }
 }
