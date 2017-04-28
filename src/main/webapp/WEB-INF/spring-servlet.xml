@@ -34,6 +34,9 @@
 			<beans:list>
 				<beans:value>org.arpit.java2blog.model.Country</beans:value>
 				<beans:value>org.arpit.java2blog.model.City</beans:value>
+				<beans:value>org.arpit.java2blog.model.Team</beans:value>
+				<beans:value>org.arpit.java2blog.model.Match</beans:value>
+                <beans:value>org.arpit.java2blog.model.Player</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
