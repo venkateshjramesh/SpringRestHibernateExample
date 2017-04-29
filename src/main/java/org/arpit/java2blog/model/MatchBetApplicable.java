@@ -29,6 +29,9 @@ public class MatchBetApplicable {
     @Column(name="createdDate")
     Date createdDate;
 
+    @Column(name="status")
+    String status;
+
     @Column(name="percentage")
     Float percentage;
 
@@ -47,6 +50,14 @@ public class MatchBetApplicable {
         this.createdDate = createdDate;
         this.percentage = percentage;
         this.value = value;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Integer getId() {

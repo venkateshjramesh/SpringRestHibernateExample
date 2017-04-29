@@ -22,11 +22,17 @@ public class Match {
     @JoinColumn(name="teamB")
     Team teamB;
 
+
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="seriesId")
+    Series series;
+
     @Column(name="status")
     String status;
 
     @Column(name="description")
     String description;
+
 
     @Column(name="startDate")
     Date startDate;
@@ -39,6 +45,14 @@ public class Match {
 
     @Column(name="createdDate")
     Date createdDate;
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
+    }
 
     public Match() {
         super();
