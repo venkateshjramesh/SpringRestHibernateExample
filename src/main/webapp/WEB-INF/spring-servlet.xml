@@ -37,6 +37,12 @@
 				<beans:value>org.arpit.java2blog.model.Team</beans:value>
 				<beans:value>org.arpit.java2blog.model.Match</beans:value>
                 <beans:value>org.arpit.java2blog.model.Player</beans:value>
+				<beans:value>org.arpit.java2blog.model.Person</beans:value>
+				<beans:value>org.arpit.java2blog.model.MyWallet</beans:value>
+				<beans:value>org.arpit.java2blog.model.WalletTransaction</beans:value>
+				<beans:value>org.arpit.java2blog.model.StaticBetType</beans:value>
+				<beans:value>org.arpit.java2blog.model.MatchBetApplicable</beans:value>
+				<beans:value>org.arpit.java2blog.model.BallBetRun</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
