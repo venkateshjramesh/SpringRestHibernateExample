@@ -125,12 +125,15 @@ CREATE TABLE `match` (
   `endDate` datetime DEFAULT NULL,
   `modifiedDate` date DEFAULT NULL,
   `createdDate` date DEFAULT NULL,
+  `seriesId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `teamA_mapping_idx` (`teamA`),
   KEY `teamB_mapping_idx` (`teamB`),
+  KEY `series_mapping_idx` (`seriesId`),
+  CONSTRAINT `series_mapping` FOREIGN KEY (`seriesId`) REFERENCES `series` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `teamA_mapping` FOREIGN KEY (`teamA`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `teamB_mapping` FOREIGN KEY (`teamB`) REFERENCES `team` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +142,7 @@ CREATE TABLE `match` (
 
 LOCK TABLES `match` WRITE;
 /*!40000 ALTER TABLE `match` DISABLE KEYS */;
-INSERT INTO `match` VALUES (1,1,1,'a','jkhjk hh  kjh',NULL,NULL,NULL,NULL),(2,1,1,'a','useless match',NULL,NULL,NULL,NULL),(3,NULL,NULL,NULL,'useless match',NULL,NULL,NULL,NULL),(4,NULL,NULL,NULL,'useless match',NULL,NULL,NULL,NULL),(5,NULL,NULL,NULL,'useless match',NULL,NULL,NULL,NULL);
+INSERT INTO `match` VALUES (1,1,1,'a','jkhjk hh  kjh',NULL,NULL,NULL,NULL,1),(2,1,1,'a','useless match',NULL,NULL,NULL,NULL,1),(6,1,1,'a','test x match',NULL,NULL,NULL,NULL,NULL),(7,1,1,'a','test x match',NULL,NULL,NULL,NULL,1),(8,1,1,'a','test x match',NULL,NULL,NULL,NULL,1),(9,NULL,1,'a','test x match',NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `match` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +161,7 @@ CREATE TABLE `match_bet_applicable` (
   `modifiedDate` datetime DEFAULT NULL,
   `percentage` float DEFAULT NULL,
   `value` float DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `match_bet_idx` (`matchId`),
   KEY `bet_for_match_idx` (`staticBetId`),
@@ -172,7 +176,7 @@ CREATE TABLE `match_bet_applicable` (
 
 LOCK TABLES `match_bet_applicable` WRITE;
 /*!40000 ALTER TABLE `match_bet_applicable` DISABLE KEYS */;
-INSERT INTO `match_bet_applicable` VALUES (1,1,1,NULL,NULL,100,1);
+INSERT INTO `match_bet_applicable` VALUES (1,1,1,NULL,NULL,100,10,'a');
 /*!40000 ALTER TABLE `match_bet_applicable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,6 +271,33 @@ INSERT INTO `player` VALUES (1,'sachin',1,'useless match','tendulkar',NULL,NULL)
 UNLOCK TABLES;
 
 --
+-- Table structure for table `series`
+--
+
+DROP TABLE IF EXISTS `series`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `series` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `createdDate` datetime DEFAULT NULL,
+  `modifiedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `series`
+--
+
+LOCK TABLES `series` WRITE;
+/*!40000 ALTER TABLE `series` DISABLE KEYS */;
+INSERT INTO `series` VALUES (1,'ipl','ipl series',NULL,NULL);
+/*!40000 ALTER TABLE `series` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `static_bet_type`
 --
 
@@ -281,7 +312,7 @@ CREATE TABLE `static_bet_type` (
   `modifiedDate` datetime DEFAULT NULL,
   `createdDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +321,7 @@ CREATE TABLE `static_bet_type` (
 
 LOCK TABLES `static_bet_type` WRITE;
 /*!40000 ALTER TABLE `static_bet_type` DISABLE KEYS */;
-INSERT INTO `static_bet_type` VALUES (1,'SBBR','Single Ball Bet - Runs','person',NULL,NULL),(2,'SBBW','Single Ball Bet - Wicket','person',NULL,NULL);
+INSERT INTO `static_bet_type` VALUES (1,'SBBR','Single Ball Bet - Runs','person',NULL,NULL),(2,'SBBW','Single Ball Bet - Wicket','person',NULL,NULL),(3,'SOBR','Single Over Bet - Runs','person',NULL,NULL),(4,'SOBW','Single Over Bet - Wicket','person',NULL,NULL),(5,'MOTM','Man of the Match','person',NULL,NULL),(6,'MOTS','Man of the Series','person',NULL,NULL),(7,'MW','Match Winner','team',NULL,NULL),(8,'SW','Series Winner','team',NULL,NULL),(9,'TS','Toss Winner','team',NULL,NULL),(10,'MSP','Max Sixes','player',NULL,NULL),(11,'MST','Max Sixes','team',NULL,NULL),(12,'MFP','Max Fours','player',NULL,NULL),(13,'MFT','MAx Fours','team',NULL,NULL);
 /*!40000 ALTER TABLE `static_bet_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-29 13:19:51
+-- Dump completed on 2017-04-29 17:00:12
