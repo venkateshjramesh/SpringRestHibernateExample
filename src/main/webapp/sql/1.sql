@@ -10,3 +10,7 @@ CREATE TABLE `match_player_details` (
   CONSTRAINT `match_mapping_details` FOREIGN KEY (`matchId`) REFERENCES `match` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `player_mapping_details` FOREIGN KEY (`playerId`) REFERENCES `player` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `betworld`.`match_player_details`
+ADD COLUMN `status` VARCHAR(45) NULL AFTER `modifiedDate`;

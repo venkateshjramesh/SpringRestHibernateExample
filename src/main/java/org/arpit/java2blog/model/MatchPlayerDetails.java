@@ -29,18 +29,22 @@ public class MatchPlayerDetails {
     @Column(name="createdDate")
     Date createdDate;
 
+    @Column(name="status")
+    String status;
+
 
 
     public MatchPlayerDetails() {
         super();
     }
 
-    public MatchPlayerDetails(Integer id, Player player, Match match, Date modifiedDate, Date createdDate) {
+    public MatchPlayerDetails(Integer id, Player player, Match match, Date modifiedDate, Date createdDate, String status) {
         this.id = id;
         this.player = player;
         this.match = match;
         this.modifiedDate = modifiedDate;
         this.createdDate = createdDate;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -81,5 +85,13 @@ public class MatchPlayerDetails {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
