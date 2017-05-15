@@ -44,6 +44,7 @@
 				<beans:value>org.arpit.java2blog.model.MatchBetApplicable</beans:value>
 				<beans:value>org.arpit.java2blog.model.BallBetRun</beans:value>
 				<beans:value>org.arpit.java2blog.model.Series</beans:value>
+				<beans:value>org.arpit.java2blog.model.MatchPlayerDetails</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
