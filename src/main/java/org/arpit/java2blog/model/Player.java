@@ -35,6 +35,17 @@ public class Player {
     @Column(name="createdDate")
     Date createdDate;
 
+    @Column(name="photoId")
+    String photoId;
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
     public Player() {
         super();
     }

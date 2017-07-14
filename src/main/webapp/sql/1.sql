@@ -14,3 +14,6 @@ CREATE TABLE `match_player_details` (
 
 ALTER TABLE `betworld`.`match_player_details`
 ADD COLUMN `status` VARCHAR(45) NULL AFTER `modifiedDate`;
+
+ALTER TABLE `betworld`.`player`
+ADD COLUMN `photoId` VARCHAR(45) NULL DEFAULT 'null' AFTER `modifiedDate`;
