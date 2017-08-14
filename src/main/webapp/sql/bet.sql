@@ -41,8 +41,7 @@ CREATE TABLE `ball_bet_run` (
   KEY `match_mapping_idx` (`matchId`),
   KEY `ruleID_mapping_idx` (`staticBetRuleId`),
   CONSTRAINT `match_mapping` FOREIGN KEY (`matchId`) REFERENCES `match` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `person_mapping` FOREIGN KEY (`playerId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `player_mapping` FOREIGN KEY (`playerId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `player_mapping` FOREIGN KEY (`playerId`) REFERENCES `player` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `ruleID_mapping` FOREIGN KEY (`staticBetRuleId`) REFERENCES `match_bet_applicable` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
